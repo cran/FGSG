@@ -1,14 +1,16 @@
 \name{gflasso}
 \alias{gflasso}
-\title{Graph Fused Lasso}
+\title{Graph Fused Lasso (FGSG)}
 \description{
-Given \eqn{A = \{a_1,\dots,a_n\}}, the response \eqn{y}, and a set of edges \eqn{E}, this function aims to solves
-\deqn{min\frac{1}{2}||Ax-y||^2 + \lambda_1||x||_1 + \lambda_2 \sum\limits_{(i,i)\in E}w_{(i,j)}|x_i-r_{(i,j)}x_j| }
-where \eqn{w_{(i,j)}} is the weight of the edge \eqn{(i,j)}, and \eqn{r_{(i,j)}} is the sign of the correlation between features \eqn{a_i} and \eqn{a_j}. The weight and sign can be specified in \eqn{Rwt}: \eqn{w=abs(Rwt)}, and \eqn{r=sign(Rwt)}.
+Given \eqn{A = {a_1,\dots,a_n}}, the response \eqn{y}, and a set of edges \eqn{E}, this function aims to solves
+\deqn{min 1/2||Ax-y||^2 + \lambda_1||x||_1 + \lambda_2 \sum_{(i,j) in E}w_(i,j)|x_i-r_(i,j)x_j| }
+where \eqn{w_(i,j)} is the weight of the edge \eqn{(i,j)}, and \eqn{r_(i,j)} is the sign of the correlation between features \eqn{a_i} and \eqn{a_j}. The weight and sign can be specified in \eqn{Rwt}: \eqn{w=|Rwt|}, and \eqn{r=sign(Rwt)}.
 }
 \usage{
-gflasso(A, y, tp, s1, s2, RmaxIter = 100, RaMaxIter = 1000, Rrho = 5, Rtau = 0.15,
-Rwt = rep(1, length(tp)), Rtol = 0.001, RaTol = 0.001, x0 = rep(0, ncol(A)))
+gflasso(A, y, tp, s1, s2, RmaxIter = 100, 
+	RaMaxIter = 1000, Rrho = 5, Rtau = 0.15, 
+	Rwt = rep(1, length(tp)), Rtol = 0.001, 
+	RaTol = 0.001, x0 = rep(0, ncol(A)))
 }
 \arguments{
   \item{A}{
@@ -18,7 +20,7 @@ Rwt = rep(1, length(tp)), Rtol = 0.001, RaTol = 0.001, x0 = rep(0, ncol(A)))
 \code{y} The response vector of length n.
 }
   \item{tp}{
-\code{tp} The edges vector of length 2g (eg. (1,2,3,4) means an edge between 1 and 2, and an edge between 3 and 4, g=2 is the number of edges).
+\code{tp} The edges vector of length 2*g (eg. (1,2,3,4) means an edge between 1 and 2, and an edge between 3 and 4, g=2 is the number of edges).
 }
   \item{s1}{
 \code{s1} The \eqn{l_1} regularization parameter, \eqn{s1 >=0}.
@@ -54,15 +56,15 @@ Rwt = rep(1, length(tp)), Rtol = 0.001, RaTol = 0.001, x0 = rep(0, ncol(A)))
 \value{
   Returned value x0 is the solution to the optimizaiton problem.
 }
-\examples{
-A<-matrix(rnorm(25),5,5)
-y<-rnorm(5)
-tp<-c(1,2,2,3,3,4,4,5)
-gflasso(A,y,tp,0,0)
-}
 \references{
  S.Kim and E.Xing. Statisctical estimation of correlated genome associations to a quantitative trait network. PLoS genetics, 5(8):e1000587, 2009
 }
 \author{
   Yiwen Sun
+}
+\examples{
+A<-matrix(rnorm(25),5,5)
+y<-rnorm(5)
+tp<-c(1,2,2,3,3,4,4,5)
+gflasso(A,y,tp,0,0)
 }

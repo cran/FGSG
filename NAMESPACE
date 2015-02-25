@@ -1,3 +1,9 @@
 useDynLib("FGSG")
-exportPattern("^[[:alpha:]]+")
 
+export(gflasso,
+goscar,
+ncFGS,
+ncTF,
+ncTFGS,
+ncTL,
+ncTLF)

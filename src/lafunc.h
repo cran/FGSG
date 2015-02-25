@@ -277,7 +277,7 @@ int dsyrk_(char *uplo, char *trans, integer *n, integer *k,
 	return 0;
     }
 /*     Quick return if possible. */
-    if (*n == 0 || (*alpha == 0. || *k == 0) && *beta == 1.) {
+    if (*n == 0 || *alpha == 0. || (*k == 0 && *beta == 1.)) {
 	return 0;
     }
 /*     And when  alpha.eq.zero. */
@@ -812,12 +812,12 @@ logical lsame_(char *ca, char *cb)
 /*        EBCDIC is assumed - ZCODE is the EBCDIC code of either lower or   
           upper case 'Z'. */
 
-	if (inta >= 129 && inta <= 137 || inta >= 145 && inta <= 153 || inta 
-		>= 162 && inta <= 169) {
+	if ((inta >= 129 && inta <= 137) || (inta >= 145 && inta <= 153) || (inta
+		>= 162 && inta <= 169)) {
 	    inta += 64;
 	}
-	if (intb >= 129 && intb <= 137 || intb >= 145 && intb <= 153 || intb 
-		>= 162 && intb <= 169) {
+	if ((intb >= 129 && intb <= 137) || (intb >= 145 && intb <= 153) || (intb
+		>= 162 && intb <= 169)) {
 	    intb += 64;
 	}
 
@@ -909,7 +909,7 @@ int dgemm_(char *transa, char *transb, integer *m, integer *
 	return 0;
     }
 /*     Quick return if possible. */
-    if (*m == 0 || *n == 0 || (*alpha == 0. || *k == 0) && *beta == 1.) {
+    if (*m == 0 || *n == 0 || *alpha == 0. || (*k == 0 && *beta == 1.)) {
 	return 0;
     }
 /*     And if  alpha.eq.zero. */
@@ -1095,7 +1095,7 @@ int dgemv_(char *trans, integer *m, integer *n, doublereal *
 	return 0;
     }
 /*     Quick return if possible. */
-    if (*m == 0 || *n == 0 || *alpha == 0. && *beta == 1.) {
+    if (*m == 0 || *n == 0 || (*alpha == 0. && *beta == 1.)) {
 	return 0;
     }
 /*     Set  LENX  and  LENY, the lengths of the vectors x and y, and set   
@@ -1689,13 +1689,13 @@ L10:
 
 /*        EBCDIC character set */
 
-	if (ic >= 129 && ic <= 137 || ic >= 145 && ic <= 153 || ic >= 162 && 
-		ic <= 169) {
+	if ((ic >= 129 && ic <= 137) || (ic >= 145 && ic <= 153) || (ic >= 162 &&
+		ic <= 169)) {
 	    *(unsigned char *)subnam = (char) (ic + 64);
 	    for (i__ = 2; i__ <= 6; ++i__) {
 		ic = *(unsigned char *)&subnam[i__ - 1];
-		if (ic >= 129 && ic <= 137 || ic >= 145 && ic <= 153 || ic >= 
-			162 && ic <= 169) {
+		if ((ic >= 129 && ic <= 137) || (ic >= 145 && ic <= 153) || (ic >=
+			162 && ic <= 169)) {
 		    *(unsigned char *)&subnam[i__ - 1] = (char) (ic + 64);
 		}
 /* L30: */

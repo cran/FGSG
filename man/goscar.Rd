@@ -1,15 +1,16 @@
 \name{goscar}
 \alias{goscar}
-\title{Graph OSCAR}
+\title{Graph OSCAR (FGSG)}
 \description{
-The goscar function implements graph OSCAR algorithm proposed in [2] using ADMM.
-Given \eqn{A = \{a_1,\dots,a_n\}}, the response \eqn{y}, and a set of edges \eqn{E}, this function aims to solves
-\deqn{min\frac{1}{2}||Ax-y||^2 + \lambda_1||x||_1 + \lambda_2 \sum\limits_{(i,j)\in E}w_{(i,j)}max\{|x_i|,|x_j|\} }
+Given \eqn{A = {a_1,\dots,a_n}}, the response \eqn{y}, and a set of edges \eqn{E}, this function aims to solves
+\deqn{min 1/2||Ax-y||^2 + \lambda_1||x||_1 + \lambda_2 \sum_{(i,j) in E}w_(i,j)max{|x_i|,|x_j|} }
 
 }
 \usage{
-goscar(A, y, tp, s1, s2, RmaxIter = 100, RaMaxIter = 1000, Rrho = 5, Rtau = 0.15,
-Rwt = rep(1, length(tp)), Rtol = 0.001, RaTol = 0.001, x0 = rep(0, ncol(A)))
+goscar(A, y, tp, s1, s2, RmaxIter = 100, 
+	RaMaxIter = 1000, Rrho = 5, Rtau = 0.15, 
+	Rwt = rep(1, length(tp)), Rtol = 0.001, 
+	RaTol = 0.001, x0 = rep(0, ncol(A)))
 }
 \arguments{
   \item{A}{
@@ -19,7 +20,7 @@ Rwt = rep(1, length(tp)), Rtol = 0.001, RaTol = 0.001, x0 = rep(0, ncol(A)))
 \code{y} The response vector of length n.
 }
   \item{tp}{
-\code{tp} The edges vector of length 2g (eg. (1,2,3,4) means an edge between 1 and 2, and an edge between 3 and 4, g=2 is the number of edges).
+\code{tp} The edges vector of length 2*g (eg. (1,2,3,4) means an edge between 1 and 2, and an edge between 3 and 4, g=2 is the number of edges).
 }
   \item{s1}{
 \code{s1} The \eqn{l_1} regularization parameter, \eqn{s1 >=0}.
@@ -55,15 +56,15 @@ Rwt = rep(1, length(tp)), Rtol = 0.001, RaTol = 0.001, x0 = rep(0, ncol(A)))
 \value{
   Returned value x0 is the solution to the optimizaiton problem.
 }
-\examples{
-A<-matrix(rnorm(25),5,5)
-y<-rnorm(5)
-tp<-c(1,2,2,3,3,4,4,5)
-goscar(A,y,tp,0,0)
-}
 \references{
  S.Yang, L.Yuan, Y.Lai, X.Shen, P.Wonka, and J.Ye. Feature grouping and selection over an undirected graph. KDD, 2012.
 }
 \author{
   Yiwen Sun
+}
+\examples{
+A<-matrix(rnorm(25),5,5)
+y<-rnorm(5)
+tp<-c(1,2,2,3,3,4,4,5)
+goscar(A,y,tp,0,0)
 }
